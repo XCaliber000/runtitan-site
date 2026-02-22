@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RunTitan — AI Agents That Work For Your Business</title>
+    <meta name="description" content="Custom AI agents built, deployed, and managed for your business. No coding required. One point of contact.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --bg: #0a0a0b;
+            --surface: #111113;
+            --border: #1e1e22;
+            --text: #e8e8ed;
+            --text-secondary: #8a8a9a;
+            --accent: #3b82f6;
+            --accent-glow: rgba(59, 130, 246, 0.15);
+            --gradient-start: #3b82f6;
+            --gradient-end: #8b5cf6;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Nav */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            padding: 1rem 2rem;
+            background: rgba(10, 10, 11, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        .logo span {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .nav-cta {
+            padding: 0.6rem 1.4rem;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .nav-cta:hover { opacity: 0.9; }
+
+        /* Hero */
+        .hero {
+            padding: 10rem 2rem 6rem;
+            text-align: center;
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        .hero h1 em {
+            font-style: normal;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.7;
+        }
+        .hero-cta {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: white;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px var(--accent-glow);
+        }
+
+        /* Section */
+        section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 1rem;
+        }
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.15rem;
+            max-width: 600px;
+            margin-bottom: 3rem;
+        }
+
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+        .service-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: border-color 0.3s;
+        }
+        .service-card:hover {
+            border-color: var(--accent);
+        }
+        .service-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .service-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+        .service-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* How It Works */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            counter-reset: step;
+        }
+        .step {
+            position: relative;
+            padding: 2rem;
+        }
+        .step::before {
+            counter-increment: step;
+            content: counter(step);
+            display: block;
+            width: 48px;
+            height: 48px;
+            line-height: 48px;
+            text-align: center;
+            border-radius: 12px;
+            background: var(--accent-glow);
+            color: var(--accent);
+            font-weight: 800;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        .step h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+        .step p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Pricing */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .pricing-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            position: relative;
+        }
+        .pricing-card.featured {
+            border-color: var(--accent);
+            box-shadow: 0 0 40px var(--accent-glow);
+        }
+        .pricing-card .badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 0.3rem 1rem;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .pricing-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .pricing-card .price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+        }
+        .pricing-card .price span {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+        .pricing-card .price-note {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+        }
+        .pricing-card ul {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        .pricing-card li {
+            padding: 0.4rem 0;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        .pricing-card li::before {
+            content: '✓ ';
+            color: var(--accent);
+            font-weight: 700;
+        }
+        .pricing-cta {
+            display: block;
+            text-align: center;
+            padding: 0.9rem;
+            border-radius: 10px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .pricing-cta.primary {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: white;
+        }
+        .pricing-cta.secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+        .pricing-cta:hover { opacity: 0.85; }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 8rem 2rem;
+        }
+        .cta-section h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+        .cta-section p {
+            color: var(--text-secondary);
+            font-size: 1.15rem;
+            margin-bottom: 2.5rem;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero { padding: 8rem 1.5rem 4rem; }
+            section { padding: 4rem 1.5rem; }
+            .services-grid, .pricing-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-inner">
+            <div class="logo"><span>RunTitan</span></div>
+            <a href="mailto:taha@runtitan.io" class="nav-cta">Get Started</a>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <h1>AI Agents That <em>Actually Work</em> For Your Business</h1>
+        <p>Custom-built, fully managed AI agents trained on your data. No coding. No learning curve. One point of contact — me.</p>
+        <a href="mailto:taha@runtitan.io" class="hero-cta">Book a Free Consultation →</a>
+    </div>
+
+    <section>
+        <div class="section-label">What We Build</div>
+        <h2 class="section-title">Your Business, Supercharged</h2>
+        <p class="section-subtitle">AI agents that understand your data, your processes, and your team — running 24/7 so you don't have to.</p>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🤖</div>
+                <h3>Custom AI Agents</h3>
+                <p>Agents trained on your documents, workflows, and institutional knowledge. They learn how your business works — not generic chatbot responses.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🔒</div>
+                <h3>Private & Secure</h3>
+                <p>Your data stays yours. Private infrastructure, encrypted at rest and in transit, with full audit trails and access controls.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">⚡</div>
+                <h3>Fully Managed</h3>
+                <p>You don't need a tech team. I build, deploy, maintain, and evolve your agents. You get results — I handle everything else.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📊</div>
+                <h3>Real Business Impact</h3>
+                <p>Contract analysis in seconds. Automated due diligence. Instant knowledge retrieval. The tasks that eat your team's time — eliminated.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🔗</div>
+                <h3>Seamless Integration</h3>
+                <p>Agents plug into how your team already works. Email, Slack, internal tools — no new software to learn, no disruption.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📈</div>
+                <h3>Scales With You</h3>
+                <p>Start with one agent, one use case. Expand to your entire operation as you see results. No lock-in, no long-term contracts required.</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="section-label">How It Works</div>
+        <h2 class="section-title">Up and Running in Weeks, Not Months</h2>
+        <p class="section-subtitle">A simple, transparent process from first conversation to live deployment.</p>
+        <div class="steps">
+            <div class="step">
+                <h3>Discovery</h3>
+                <p>We meet to understand your workflows, pain points, and priorities. I identify where AI will have the most impact — fast.</p>
+            </div>
+            <div class="step">
+                <h3>Build & Train</h3>
+                <p>I build your agent, train it on your data, configure access controls, and test it thoroughly before anything goes live.</p>
+            </div>
+            <div class="step">
+                <h3>Deploy & Evolve</h3>
+                <p>Your agent goes live. I remain your single point of contact — monitoring, improving, and expanding as your needs grow.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing">
+        <div class="section-label">Pricing</div>
+        <h2 class="section-title">Simple, Transparent Pricing</h2>
+        <p class="section-subtitle">Every plan includes setup, training, maintenance, and direct access to me.</p>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>Pilot</h3>
+                <div class="price">$2,000 <span>/mo</span></div>
+                <div class="price-note">Perfect to prove the value</div>
+                <ul>
+                    <li>1 custom AI agent</li>
+                    <li>1 primary use case</li>
+                    <li>Up to 5 users</li>
+                    <li>10 hours/month support</li>
+                    <li>Full setup & training</li>
+                </ul>
+                <a href="mailto:taha@runtitan.io?subject=Interested in RunTitan Pilot" class="pricing-cta secondary">Get Started</a>
+            </div>
+            <div class="pricing-card featured">
+                <div class="badge">Most Popular</div>
+                <h3>Professional</h3>
+                <div class="price">$4,500 <span>/mo</span></div>
+                <div class="price-note">For growing teams</div>
+                <ul>
+                    <li>Up to 3 AI agents</li>
+                    <li>Multiple use cases</li>
+                    <li>Up to 15 users</li>
+                    <li>20 hours/month support</li>
+                    <li>Priority response</li>
+                </ul>
+                <a href="mailto:taha@runtitan.io?subject=Interested in RunTitan Professional" class="pricing-cta primary">Get Started</a>
+            </div>
+            <div class="pricing-card">
+                <h3>Enterprise</h3>
+                <div class="price">$8,500 <span>/mo</span></div>
+                <div class="price-note">Full-scale deployment</div>
+                <ul>
+                    <li>Unlimited AI agents</li>
+                    <li>Full-firm deployment</li>
+                    <li>Unlimited users</li>
+                    <li>40 hours/month support</li>
+                    <li>Dedicated priority line</li>
+                </ul>
+                <a href="mailto:taha@runtitan.io?subject=Interested in RunTitan Enterprise" class="pricing-cta secondary">Get Started</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="cta-section">
+        <h2>Ready to See What AI Can Do For You?</h2>
+        <p>Book a free 15-minute consultation. I'll show you exactly where AI saves your team time — no commitment, no pitch.</p>
+        <a href="mailto:taha@runtitan.io?subject=Free Consultation Request" class="hero-cta">Book Free Consultation →</a>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 RunTitan. All rights reserved.</p>
+    </footer>
+</body>
+</html>
